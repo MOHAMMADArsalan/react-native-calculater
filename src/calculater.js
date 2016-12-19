@@ -13,6 +13,7 @@ export default class Calculater extends Component {
             answer: ""
         }
         this.handlerInput = this.handlerInput.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
     handlerInput(value) {
         let oprator = {
@@ -84,7 +85,14 @@ export default class Calculater extends Component {
         }
 
     }
-
+    clearInput() {
+        this.setState({
+            value: '',
+            temp: '',
+            command: null,
+            answer: ""
+        })
+    }
     render() {
         return (
             <View >
@@ -96,26 +104,27 @@ export default class Calculater extends Component {
                     value={this.state.value.toString()}
                     onChangeText={this.handlerInput}
                     />
-                <Text>{this.state.answer ? this.state.answer : this.state.temp} {this.state.command}</Text>
-                <Text>Answer is: {this.state.answer}</Text>
+
+                <Text style={styles.fontSize}>{this.state.temp ? this.state.temp : this.state.answer } {this.state.command}</Text>
+                <Text style={styles.fontSize}>Answer is: {this.state.answer}</Text>
                 <TouchableNativeFeedback>
                     <View style={styles.container}>
                         <Text style={styles.Box} onPress={() => this.handlerInput(1)}>1</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput(2)}>2</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput(3)}>3</Text>
+                        <Text style={styles.Box} onPress={() => this.clearInput()}>Clear</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput(4)}>4</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput(5)}>5</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput(6)}>6</Text>
+                        <Text style={styles.Box} onPress={() => this.handlerInput("+")}>+</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput(7)}>7</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput(8)}>8</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput(9)}>9</Text>
+                        <Text style={styles.Box} onPress={() => this.handlerInput("-")} >-</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput("=")}>=</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput(0)}>0</Text>
-                        <Text style={styles.Box} onPress={() => this.handlerInput("+")}>+</Text>
-                        <Text style={styles.Box} onPress={() => this.handlerInput("-")} >-</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput("*")}>*</Text>
                         <Text style={styles.Box} onPress={() => this.handlerInput("/")}>/</Text>
-
                     </View>
                 </TouchableNativeFeedback>
             </View>
@@ -134,7 +143,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginTop: 70
+        marginTop: 110
     },
     Box: {
         fontSize: 25,
@@ -142,12 +151,15 @@ const styles = StyleSheet.create({
         borderColor: "white",
         borderWidth: 1,
         color: "white",
-        width: 120,
+        width: 90,
         paddingTop: 21,
         paddingRight: 10,
         paddingLeft: 10,
         paddingBottom: 21,
 
+    },
+    fontSize: {
+        fontSize: 25
     }
 })
 
