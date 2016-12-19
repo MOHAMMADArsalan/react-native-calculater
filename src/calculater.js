@@ -21,18 +21,20 @@ export default class Calculater extends Component {
             "-": "-",
             "/": "/"
         }
-        if (value === oprator[value]) {
+        if (value === oprator[value] && (this.state.value || this.state.answer)) {
             this.setState({
                 temp: this.state.value,
                 value: "",
                 command: value
             })
         }
-        else if (value === "=") {
+        else if (value === "=" && (this.state.temp || this.state.answer) && (this.state.value || this.state.answer)) {
+            let value = this.state.value ? this.state.value : this.state.answer;
+            let temp = this.state.temp ? this.state.temp : this.state.answer;
             switch (this.state.command) {
                 case "+":
                     this.setState({
-                        answer: parseInt(this.state.temp) + parseInt(this.state.value),
+                        answer: parseInt(temp) + parseInt(value),
                         temp: "",
                         command: null,
                         value: ""
@@ -40,7 +42,7 @@ export default class Calculater extends Component {
                     break;
                 case "*":
                     this.setState({
-                        answer: parseInt(this.state.temp) * parseInt(this.state.value),
+                        answer: parseInt(temp) * parseInt(value),
                         temp: "",
                         command: null,
                         value: ""
@@ -48,7 +50,7 @@ export default class Calculater extends Component {
                     break;
                 case "-":
                     this.setState({
-                        answer: parseInt(this.state.temp) - parseInt(this.state.value),
+                        answer: parseInt(temp) - parseInt(value),
                         temp: "",
                         command: null,
                         value: ""
@@ -56,7 +58,7 @@ export default class Calculater extends Component {
                     break;
                 case "/":
                     this.setState({
-                        answer: parseInt(this.state.temp) / parseInt(this.state.value),
+                        answer: parseInt(temp) / parseInt(value),
                         temp: "",
                         command: null,
                         value: ""
@@ -82,7 +84,7 @@ export default class Calculater extends Component {
         }
 
     }
-   
+
     render() {
         return (
             <View >
@@ -94,7 +96,7 @@ export default class Calculater extends Component {
                     value={this.state.value.toString()}
                     onChangeText={this.handlerInput}
                     />
-                <Text>{this.state.temp} {this.state.command}</Text>
+                <Text>{this.state.answer ? this.state.answer : this.state.temp} {this.state.command}</Text>
                 <Text>Answer is: {this.state.answer}</Text>
                 <TouchableNativeFeedback>
                     <View style={styles.container}>
